@@ -1,109 +1,128 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+<!-- 原代码中多个<style>标签散落在<head>内外，需合并 -->
 <head>
-    <meta charset="UTF-8"> <!-- 设置字符编码为UTF-8 -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- 设置视口以适应不同设备 -->
-    <title>连乘计算器</title> <!-- 设置网页标题 -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>连乘计算器</title>
     <style>
+        /* 合并所有CSS样式到同一个<style>标签 */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* 设置全局字体 */
-            display: flex; /* 使用Flexbox布局 */
-            justify-content: center; /* 水平居中 */
-            align-items: center; /* 垂直居中 */
-            height: 100vh; /* 设置高度为视口高度的100% */
-            margin: 0; /* 移除默认边距 */
-            background-color: #f9fafb; /* 设置背景颜色 */
-            color: #334155; /* 设置文本颜色 */
-            transition: background-color 0.3s, color 0.3s; /* 设置过渡效果 */
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f3f4f6; /* 合并后的背景色 */
+            color: #1e293b;
+            transition: background-color 0.3s, color 0.3s;
         }
         .container {
-            width: 100%; /* 宽度占满父元素 */
-            max-width: 500px; /* 最大宽度为500px */
-            padding: 3rem; /* 内边距为3rem */
-            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
-            border-radius: 0.75rem; /* 圆角半径为0.75rem */
-            background-color: #ffffff; /* 设置背景颜色 */
-            transition: background-color 0.3s, color 0.3s; /* 设置过渡效果 */
-        }
-        .calculator {
-            text-align: left; /* 文本左对齐 */
+            width: 100%;
+            max-width: 500px;
+            padding: 2.5rem; /* 合并后的内边距 */
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08); /* 合并后的阴影 */
+            border-radius: 1rem; /* 合并后的圆角 */
+            background-color: #ffffff;
+            transition: background-color 0.3s, color 0.3s;
         }
         h2 {
-            margin-bottom: 2rem; /* 下外边距为2rem */
-            color: inherit; /* 继承父元素的颜色 */
-            font-size: 2rem; /* 设置字体大小为2rem */
+            margin-bottom: 2.5rem; /* 合并后的间距 */
+            color: #4338ca; /* 合并后的标题颜色 */
+            font-size: 2rem;
+            font-weight: 600; /* 合并后的加粗 */
         }
         label {
-            display: block; /* 设置为块级元素 */
-            margin-bottom: 1rem; /* 下外边距为1rem */
-            color: #6b7280; /* 设置文本颜色 */
-            font-size: 1.125rem; /* 设置字体大小为1.125rem */
+            display: block;
+            margin-bottom: 1rem;
+            color: #6b7280;
+            font-size: 1.125rem;
         }
         input[type="number"] {
-            width: calc(100% - 3rem); /* 宽度为父元素宽度减去3rem */
-            padding: 1rem; /* 内边距为1rem */
-            margin-bottom: 1.5rem; /* 下外边距为1.5rem */
-            border: 1px solid #e2e8f0; /* 边框为1px实线，颜色为#e2e8f0 */
-            border-radius: 0.5rem; /* 圆角半径为0.5rem */
-            transition: border-color 0.3s; /* 设置过渡效果 */
-            outline: none; /* 移除聚焦时的轮廓 */
-            font-size: 1rem; /* 设置字体大小为1rem */
+            width: 100%; /* 修复原calc冲突，使用100% */
+            padding: 1.125rem; /* 合并后的内边距 */
+            margin-bottom: 2rem; /* 合并后的间距 */
+            border: 1px solid #e5e7eb; /* 合并后的边框色 */
+            border-radius: 0.5rem;
+            transition: border-color 0.3s;
+            outline: none;
+            font-size: 1.05rem; /* 合并后的字体大小 */
         }
         input[type="number"]:focus {
-            border-color: #6366f1; /* 聚焦时边框颜色变为#6366f1 */
+            border-color: #6366f1;
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1); /* 合并后的聚焦阴影 */
         }
         button {
-            width: 100%; /* 宽度占满父元素 */
-            padding: 1rem; /* 内边距为1rem */
-            background-color: #6366f1; /* 设置背景颜色 */
-            color: white; /* 设置文本颜色为白色 */
-            border: none; /* 移除边框 */
-            border-radius: 0.5rem; /* 圆角半径为0.5rem */
-            cursor: pointer; /* 鼠标悬停时显示指针 */
-            transition: background-color 0.3s; /* 设置过渡效果 */
-            font-size: 1rem; /* 设置字体大小为1rem */
+            width: 100%;
+            padding: 1rem;
+            background-color: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: transform 0.15s, background-color 0.3s; /* 合并后的过渡 */
+            font-size: 1rem;
+            font-weight: 500; /* 合并后的加粗 */
         }
         button:hover {
-            background-color: #4f46e5; /* 鼠标悬停时背景颜色变为#4f46e5 */
+            background-color: #4f46e5;
+            transform: translateY(-1px); /* 合并后的悬停效果 */
+        }
+        button:active {
+            transform: translateY(0);
+            background-color: #3730a3; /* 合并后的按下颜色 */
         }
         .result {
-            margin-top: 2rem; /* 上外边距为2rem */
-            font-size: 1.5rem; /* 字体大小为1.5rem */
-            font-weight: bold; /* 加粗字体 */
-            color: inherit; /* 继承父元素的颜色 */
+            margin-top: 2rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: inherit;
         }
         .history {
-            margin-top: 2rem; /* 上外边距为2rem */
-            font-size: 1.125rem; /* 字体大小为1.125rem */
-            color: inherit; /* 继承父元素的颜色 */
-            border-top: 1px solid #e2e8f0; /* 添加顶部边框 */
-            padding-top: 1rem; /* 上内边距为1rem */
+            margin-top: 2rem;
+            font-size: 1.125rem;
+            color: inherit;
+            border-top: 1px solid #f3f4f6; /* 合并后的分隔线颜色 */
+            padding-top: 1.5rem; /* 合并后的内边距 */
         }
         .history h3 {
-            margin-bottom: 1rem; /* 下外边距为1rem */
-            font-size: 1.25rem; /* 设置字体大小为1.25rem */
-            font-weight: normal; /* 正常字体加粗 */
-            color: inherit; /* 继承父元素的颜色 */
-        }
-        .clear-history-button {
-            margin-top: 1rem; /* 上外边距为1rem */
-            background-color: #dc2626; /* 设置背景颜色 */
-            color: white; /* 设置文本颜色为白色 */
-            border: none; /* 移除边框 */
-            border-radius: 0.5rem; /* 圆角半径为0.5rem */
-            cursor: pointer; /* 鼠标悬停时显示指针 */
-            transition: background-color 0.3s; /* 设置过渡效果 */
-            font-size: 1rem; /* 设置字体大小为1rem */
-        }
-        .clear-history-button:hover {
-            background-color: #b91c1c; /* 鼠标悬停时背景颜色变为#b91c1c */
+            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            font-weight: 500; /* 合并后的加粗 */
+            color: #4b5563; /* 合并后的标题颜色 */
         }
         .history p {
-            margin: 0.5rem 0; /* 上下外边距为0.5rem */
+            background-color: #f8fafc; /* 合并后的背景色 */
+            padding: 0.75rem 1rem;
+            border-radius: 0.5rem;
+            margin: 0.75rem 0;
+            transition: background-color 0.2s;
+        }
+        .history p:hover {
+            background-color: #f1f5f9; /* 合并后的悬停颜色 */
+        }
+        .clear-history-button {
+            width: auto;
+            padding: 0.75rem 1.5rem;
+            margin-top: 1.5rem;
+            background-color: #dc2626;
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 0.95rem;
+        }
+        .clear-history-button:hover {
+            background-color: #b91c1c;
         }
     </style>
 </head>
 <body>
+    <!-- 新增黑暗模式切换按钮 -->
+    <button class="dark-mode-toggle" onclick="toggleDarkMode()">🌞 切换模式</button>
+    
     <div class="container">
         <div class="calculator">
             <h2>连乘计算器</h2> <!-- 计算器标题 -->
@@ -114,7 +133,7 @@
             <input type="number" id="multiplier" placeholder="请输入乘数"> <!-- 乘数输入框 -->
             
             <label for="times">次数:</label> <!-- 次数标签 -->
-            <input type="number" id="times" placeholder="请输入乘数的次数"> <!-- 次数输入框 -->
+            <input type="number" id="times" placeholder="请输入乘数的次数" min="1"> <!-- 新增min属性 -->
             
             <button onclick="calculateProduct()">计算结果</button> <!-- 计算按钮 -->
             <div class="result" id="result"></div> <!-- 结果展示区域 -->
@@ -127,37 +146,128 @@
     </div>
 
     <script>
+        // 提取输入值获取逻辑为独立函数（新增）
+        function getInputValues() {
+            return {
+                base: parseFloat(document.getElementById('base').value),
+                multiplier: parseFloat(document.getElementById('multiplier').value),
+                times: parseInt(document.getElementById('times').value)
+            };
+        }
+    
         function calculateProduct() {
-            const base = parseFloat(document.getElementById('base').value); // 获取基数并转换为浮点数
-            const multiplier = parseFloat(document.getElementById('multiplier').value); // 获取乘数并转换为浮点数
-            const times = parseInt(document.getElementById('times').value); // 获取次数并转换为整数
-
-            if (isNaN(base) || isNaN(multiplier) || isNaN(times)) { // 检查输入是否为有效数字
-                document.getElementById('result').textContent = '请输入有效的数字'; // 提示用户输入无效数字
-                return; // 返回，停止执行后续代码
+            const { base, multiplier, times } = getInputValues(); // 使用提取的输入值
+    
+            // 验证逻辑保持不变...
+            if (isNaN(base) || isNaN(multiplier) || isNaN(times) || times < 1) { 
+                document.getElementById('result').textContent = '请输入有效数值（基数/乘数为数字，次数≥1）';
+                return;
             }
-
-            let product = base; // 初始化产品值为基数
-            for (let i = 0; i < times; i++) { // 循环乘法操作
-                product *= multiplier; // 将产品值乘以乘数
+    
+            // 计算逻辑保持不变...
+            let product = base;
+            for (let i = 0; i < times; i++) {
+                product *= multiplier;
             }
-
-            document.getElementById('result').textContent = `结果为: ${product}`; // 显示计算结果
-
-            // 添加到历史记录
-            const historyDiv = document.getElementById('historyEntries'); // 获取历史记录区域
-            const newEntry = document.createElement('p'); // 创建新的段落元素
-            newEntry.textContent = `${base} * ${multiplier}^${times} = ${product}`; // 设置段落内容为计算公式和结果
-            historyDiv.appendChild(newEntry); // 将新段落添加到历史记录区域
+    
+            // 结果展示保持不变...
+            document.getElementById('result').textContent = `结果为: ${product.toFixed(4)}`;
+    
+            // 历史记录逻辑保持不变...
+            const historyDiv = document.getElementById('historyEntries');
+            const newEntry = document.createElement('p');
+            newEntry.textContent = `${base} * ${multiplier}^${times} = ${product.toFixed(4)}`;
+            
+            if (historyDiv.children.length >= 10) {
+                historyDiv.removeChild(historyDiv.firstChild);
+            }
+            historyDiv.appendChild(newEntry);
         }
 
         function clearHistory() {
             const historyDiv = document.getElementById('historyEntries'); // 获取历史记录区域
             historyDiv.innerHTML = ''; // 清空历史记录区域的内容
         }
+
+        // 新增：黑暗模式切换逻辑
+        function toggleDarkMode() {
+            const body = document.body;
+            const isDarkMode = body.classList.toggle('dark-mode');
+            const button = document.querySelector('.dark-mode-toggle');
+            button.textContent = isDarkMode ? '🌙 切换模式' : '🌞 切换模式';
+            localStorage.setItem('darkMode', isDarkMode); // 持久化保存状态
+        }
+
+        // 页面加载时初始化黑暗模式
+        window.onload = function() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                document.querySelector('.dark-mode-toggle').textContent = '🌙 切换模式';
+            }
+        };
     </script>
 </body>
 </html>
+<style>
+    body {
+        background-color: #f3f4f6; /* 更柔和的浅灰色背景 */
+        color: #1e293b; /* 更深的正文颜色 */
+    }
+    .container {
+        background-color: #ffffff;
+        border-radius: 1rem; /* 更圆润的容器圆角 */
+        padding: 2.5rem; /* 调整内边距更紧凑 */
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.08); /* 更柔和的阴影 */
+    }
+    h2 {
+        color: #4338ca; /* 主色调整为更深的紫色 */
+        font-weight: 600; /* 标题加粗 */
+        margin-bottom: 2.5rem; /* 增加标题下方间距 */
+    }
 
+    /* 黑暗模式切换按钮样式 */
+    .dark-mode-toggle {
+        position: fixed;
+        top: 2rem;
+        right: 2rem;
+        width: auto;
+        padding: 0.5rem 1rem;
+        background-color: #6366f1;
+        color: white;
+        border: none;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        font-size: 0.95rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 1000; /* 确保按钮在最上层 */
+    }
+    .dark-mode-toggle:hover {
+        background-color: #4f46e5;
+    }
 
-
+    /* 黑暗模式主题样式 */
+    .dark-mode {
+        background-color: #1e293b; /* 深背景色 */
+        color: #f8fafc; /* 浅文字色 */
+    }
+    .dark-mode .container {
+        background-color: #2d3748; /* 容器深背景 */
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* 更明显的阴影 */
+    }
+    .dark-mode input[type="number"] {
+        background-color: #4a5568; /* 输入框深背景 */
+        border-color: #718096; /* 输入框边框色 */
+        color: #f8fafc; /* 输入文字色 */
+    }
+    .dark-mode input[type="number"]:focus {
+        border-color: #93c5fd; /* 输入框聚焦色 */
+        box-shadow: 0 0 0 3px rgba(147, 197, 253, 0.1); /* 聚焦阴影 */
+    }
+    .dark-mode .history p {
+        background-color: #4a5568; /* 历史记录深背景 */
+    }
+    .dark-mode .history p:hover {
+        background-color: #64748b; /* 历史记录悬停深背景 */
+    }
+</style>
